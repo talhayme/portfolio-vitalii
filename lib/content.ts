@@ -160,6 +160,7 @@ export const ui = {
   nav: {
     home: { en: "Overview", ru: "Обзор" },
     work: { en: "Selected Work", ru: "Проекты" },
+    notes: { en: "Engineering Notes", ru: "Заметки" },
     about: { en: "About", ru: "Обо мне" },
     stack: { en: "Stack", ru: "Стек" },
     contact: { en: "Contact", ru: "Контакты" },

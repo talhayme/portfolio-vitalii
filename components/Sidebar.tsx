@@ -1,27 +1,26 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
-import { ui } from "@/lib/content";
-import { projects } from "@/lib/content";
+import { ui, projects } from "@/lib/content";
 import LocaleSwitcher from "./LocaleSwitcher";
 
-export default function Sidebar({
-  locale,
-  currentPath,
-}: {
-  locale: Locale;
-  currentPath: string;
-}) {
+export default function Sidebar({ locale }: { locale: Locale }) {
+  const pathname = usePathname() ?? `/${locale}`;
+
   const items: { href: string; label: string }[] = [
     { href: `/${locale}`, label: ui.nav.home[locale] },
     { href: `/${locale}/work`, label: ui.nav.work[locale] },
+    { href: `/${locale}/notes`, label: ui.nav.notes[locale] },
     { href: `/${locale}/stack`, label: ui.nav.stack[locale] },
     { href: `/${locale}/about`, label: ui.nav.about[locale] },
     { href: `/${locale}/contact`, label: ui.nav.contact[locale] },
   ];
 
   const isActive = (href: string) => {
-    if (href === `/${locale}`) return currentPath === `/${locale}`;
-    return currentPath.startsWith(href);
+    if (href === `/${locale}`) return pathname === `/${locale}`;
+    return pathname.startsWith(href);
   };
 
   return (
@@ -35,9 +34,7 @@ export default function Sidebar({
             {locale === "ru" ? ui.hero.nameRu : ui.hero.name}
           </div>
           <div className="text-xs text-[var(--fg-muted)] mt-1">
-            {locale === "ru"
-              ? "Senior Fullstack · AI/SaaS"
-              : "Senior Fullstack · AI/SaaS"}
+            Senior Fullstack · AI/SaaS
           </div>
         </Link>
 
@@ -67,7 +64,7 @@ export default function Sidebar({
                 key={p.slug}
                 href={`/${locale}/work/${p.slug}`}
                 className={`text-sm py-1 px-2 -mx-2 rounded transition-colors ${
-                  currentPath === `/${locale}/work/${p.slug}`
+                  pathname === `/${locale}/work/${p.slug}`
                     ? "text-[var(--fg)] bg-[var(--bg-elevated)] font-medium"
                     : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
                 }`}
@@ -79,7 +76,7 @@ export default function Sidebar({
         </div>
 
         <div className="mt-auto pt-6 border-t border-[var(--border)]">
-          <LocaleSwitcher currentLocale={locale} currentPath={currentPath} />
+          <LocaleSwitcher currentLocale={locale} />
           <div className="mt-4 font-mono text-[10px] text-[var(--fg-subtle)] leading-relaxed">
             © {new Date().getFullYear()} Vitalii Bogachev
             <br />

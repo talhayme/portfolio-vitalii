@@ -1,16 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { locales, type Locale } from "@/lib/i18n";
 
 export default function LocaleSwitcher({
   currentLocale,
-  currentPath,
 }: {
   currentLocale: Locale;
-  currentPath: string;
 }) {
+  const pathname = usePathname() ?? `/${currentLocale}`;
+
   const swap = (target: Locale) => {
-    if (currentPath === `/${currentLocale}`) return `/${target}`;
-    return currentPath.replace(`/${currentLocale}`, `/${target}`);
+    if (pathname === `/${currentLocale}`) return `/${target}`;
+    return pathname.replace(`/${currentLocale}`, `/${target}`);
   };
 
   return (

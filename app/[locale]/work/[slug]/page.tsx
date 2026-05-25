@@ -4,6 +4,7 @@ import { isLocale } from "@/lib/i18n";
 import { projects, type ProjectSlug } from "@/lib/content";
 import MetricCard from "@/components/MetricCard";
 import { caseStudies } from "@/lib/case-studies";
+import CodeBlock from "@/components/CodeBlock";
 
 export function generateStaticParams() {
   const slugs = projects.map((p) => p.slug);
@@ -86,6 +87,20 @@ export default async function CaseStudyPage({
           {study.decisions[locale].map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+
+          {study.snippets && study.snippets.length > 0 && (
+            <>
+              <h2>{locale === "ru" ? "Из кода" : "From the code"}</h2>
+              {study.snippets.map((s, i) => (
+                <CodeBlock
+                  key={i}
+                  label={s.label[locale]}
+                  lang={s.lang}
+                  code={s.code}
+                />
+              ))}
+            </>
+          )}
 
           <h2>{locale === "ru" ? "Результат" : "Result"}</h2>
           {study.result[locale].map((p, i) => (
