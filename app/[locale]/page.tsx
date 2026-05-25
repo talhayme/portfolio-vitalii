@@ -34,8 +34,35 @@ export default async function HomePage({
 
       <hr />
 
+      <h2 id="athenadev">
+        {locale === "ru" ? "Моя компания" : "My company"}
+      </h2>
+      <Link
+        href={`/${locale}/athenadev`}
+        className="block group border border-[var(--border)] hover:border-[var(--accent)] rounded-lg p-8 transition-all bg-[var(--bg-elevated)] no-underline mb-12"
+      >
+        <div className="font-mono text-xs text-[var(--accent)] mb-2">
+          athenadev.tech · {locale === "ru" ? "AI-консалтинг" : "AI consulting"}
+        </div>
+        <h3 className="text-2xl font-semibold tracking-tight mb-2 group-hover:text-[var(--accent)] transition-colors mt-0">
+          AthenaDev
+        </h3>
+        <p className="text-[var(--fg-muted)] mb-4 mt-0">
+          {locale === "ru"
+            ? "Внедряю Claude Code, кастомные MCP-серверы, RAG-системы и AI-воркфлоу в продуктовые команды среднего размера. Fintech, Legal, B2B SaaS."
+            : "Embedding Claude Code, custom MCP servers, RAG systems, and AI workflows into mid-size product teams. Fintech, Legal, B2B SaaS."}
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {["Claude Code", "MCP", "RAG", "LLM Observability", "Cost Engineering", "Fine-tuning", "Prompt Engineering"].map((t) => (
+            <span key={t} className="pill">
+              {t}
+            </span>
+          ))}
+        </div>
+      </Link>
+
       <h2 id="featured">
-        {locale === "ru" ? "Текущий проект" : "Currently building"}
+        {locale === "ru" ? "Текущий продукт" : "Current product"}
       </h2>
       <Link
         href={`/${locale}/work/${featured.slug}`}

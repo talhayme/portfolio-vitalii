@@ -159,6 +159,7 @@ export const projects: ProjectMeta[] = [
 export const ui = {
   nav: {
     home: { en: "Overview", ru: "Обзор" },
+    athenadev: { en: "AthenaDev (consulting)", ru: "AthenaDev (консалтинг)" },
     work: { en: "Selected Work", ru: "Проекты" },
     notes: { en: "Engineering Notes", ru: "Заметки" },
     about: { en: "About", ru: "Обо мне" },

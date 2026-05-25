@@ -11,6 +11,7 @@ export default function Sidebar({ locale }: { locale: Locale }) {
 
   const items: { href: string; label: string }[] = [
     { href: `/${locale}`, label: ui.nav.home[locale] },
+    { href: `/${locale}/athenadev`, label: ui.nav.athenadev[locale] },
     { href: `/${locale}/work`, label: ui.nav.work[locale] },
     { href: `/${locale}/notes`, label: ui.nav.notes[locale] },
     { href: `/${locale}/stack`, label: ui.nav.stack[locale] },
