@@ -1,0 +1,92 @@
+import Link from "next/link";
+import type { Locale } from "@/lib/i18n";
+import { ui } from "@/lib/content";
+import { projects } from "@/lib/content";
+import LocaleSwitcher from "./LocaleSwitcher";
+
+export default function Sidebar({
+  locale,
+  currentPath,
+}: {
+  locale: Locale;
+  currentPath: string;
+}) {
+  const items: { href: string; label: string }[] = [
+    { href: `/${locale}`, label: ui.nav.home[locale] },
+    { href: `/${locale}/work`, label: ui.nav.work[locale] },
+    { href: `/${locale}/stack`, label: ui.nav.stack[locale] },
+    { href: `/${locale}/about`, label: ui.nav.about[locale] },
+    { href: `/${locale}/contact`, label: ui.nav.contact[locale] },
+  ];
+
+  const isActive = (href: string) => {
+    if (href === `/${locale}`) return currentPath === `/${locale}`;
+    return currentPath.startsWith(href);
+  };
+
+  return (
+    <aside className="w-full md:w-64 md:shrink-0 md:fixed md:h-screen md:overflow-y-auto border-b md:border-b-0 md:border-r border-[var(--border)] p-6 md:p-8 bg-[var(--bg)]">
+      <div className="flex flex-col h-full">
+        <Link href={`/${locale}`} className="block mb-8 group">
+          <div className="font-mono text-xs text-[var(--fg-subtle)] mb-1">
+            {locale === "ru" ? "Портфолио" : "Portfolio"} / v1
+          </div>
+          <div className="text-base font-semibold tracking-tight group-hover:text-[var(--accent)] transition-colors">
+            {locale === "ru" ? ui.hero.nameRu : ui.hero.name}
+          </div>
+          <div className="text-xs text-[var(--fg-muted)] mt-1">
+            {locale === "ru"
+              ? "Senior Fullstack · AI/SaaS"
+              : "Senior Fullstack · AI/SaaS"}
+          </div>
+        </Link>
+
+        <nav className="flex flex-col gap-1 mb-8">
+          {items.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`text-sm py-1.5 px-2 -mx-2 rounded transition-colors ${
+                isActive(item.href)
+                  ? "text-[var(--fg)] bg-[var(--bg-elevated)] font-medium"
+                  : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="mb-6">
+          <div className="font-mono text-xs text-[var(--fg-subtle)] uppercase tracking-wider mb-2">
+            {locale === "ru" ? "Кейсы" : "Case studies"}
+          </div>
+          <nav className="flex flex-col gap-1">
+            {projects.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/${locale}/work/${p.slug}`}
+                className={`text-sm py-1 px-2 -mx-2 rounded transition-colors ${
+                  currentPath === `/${locale}/work/${p.slug}`
+                    ? "text-[var(--fg)] bg-[var(--bg-elevated)] font-medium"
+                    : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
+                }`}
+              >
+                {p.company}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="mt-auto pt-6 border-t border-[var(--border)]">
+          <LocaleSwitcher currentLocale={locale} currentPath={currentPath} />
+          <div className="mt-4 font-mono text-[10px] text-[var(--fg-subtle)] leading-relaxed">
+            © {new Date().getFullYear()} Vitalii Bogachev
+            <br />
+            athenadev.tech
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}
