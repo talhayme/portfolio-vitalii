@@ -36,6 +36,9 @@ export const caseStudies: Partial<Record<ProjectSlug, CaseStudy>> = {
         "OAuth 2.0 via Google, VK, and Telegram (deep-link). Plus email/password with rate-limited registration and password validation.",
         "PDF processing pipeline: BabelDOC for layout-preserving translation, pdf2zh as fallback, ReportLab for output, OCR via Tesseract when documents are scanned.",
         "Async job processing through Celery + Redis with progress streaming back to the browser — handles 300-page documents without hitting Gunicorn timeouts.",
+        "Provider fallback at the call site: timeouts, rate limits, provider outages and malformed responses each degrade to a secondary model rather than failing the user's job. Every fallback is logged with the error class that triggered it, so the failure pattern is visible rather than inferred.",
+        "An evaluation set gates every prompt and model change: accuracy, relevance, hallucination rate, latency and cost per page, with per-case regression against a stored baseline. A change that improves the average while breaking three specific document types does not ship.",
+        "Versioned prompts and request/response logging with pipeline tracing — when a translation comes out wrong, the exact prompt, model and intermediate chunks that produced it are recoverable.",
         "80+ pytest tests (auth, billing, translation, user isolation) plus Playwright e2e covering the full register-to-translate-to-pay journey.",
       ],
       ru: [
@@ -45,6 +48,9 @@ export const caseStudies: Partial<Record<ProjectSlug, CaseStudy>> = {
         "OAuth 2.0 через Google, VK и Telegram (deep-link). Плюс email/пароль с rate-limit на регистрацию и валидацией пароля.",
         "PDF-пайплайн: BabelDOC для перевода с layout, pdf2zh как fallback, ReportLab на выходе, OCR через Tesseract для сканов.",
         "Асинхронные задачи через Celery + Redis с прогрессом в браузере — переводит документы 300+ страниц без HTTP-таймаутов.",
+        "Фолбэк между провайдерами на уровне вызова: таймауты, рейт-лимиты, недоступность провайдера и некорректные ответы деградируют на запасную модель, а не роняют задачу пользователя. Каждый фолбэк логируется с классом ошибки, которая его вызвала, — картина сбоев видна, а не додумывается.",
+        "Evaluation-набор, через который проходит каждое изменение промпта или модели: точность, релевантность, уровень галлюцинаций, задержка и стоимость страницы, с пер-кейсовым сравнением с сохранённым baseline. Изменение, которое улучшает среднее, но ломает три конкретных типа документов, не выкатывается.",
+        "Версионированные промпты и логирование запросов/ответов с трейсингом пайплайна — когда перевод вышел плохим, восстановим точный промпт, модель и промежуточные чанки, которые его дали.",
         "80+ pytest-тестов (auth, биллинг, перевод, изоляция пользователей) плюс Playwright e2e полного пути «регистрация → перевод → оплата».",
       ],
     },
@@ -53,23 +59,29 @@ export const caseStudies: Partial<Record<ProjectSlug, CaseStudy>> = {
         "Database-per-context separation: three independent PostgreSQL databases (translate_bot, translate_bot_staging, translate_web). Failure in one doesn't propagate. Same pattern for Redis instances.",
         "Race condition protection: page deductions go through SELECT FOR UPDATE inside an atomic transaction; subscription activation is enforced by a partial unique index ('only one active subscription per user').",
         "Security defaults: JWT with database-backed blacklist (immediate revocation on logout), Fernet encryption for user-supplied API keys, Flask-Limiter on registration (5/hour) and login (10/min) backed by Redis.",
-        "Cost engineering: smart model routing cut average per-page LLM cost by ~40% vs. always using GPT-4. Bulk Google Translate path saves another tier of cost for users on Economy plan.",
+        "Cost engineering: smart model routing cut average per-page LLM cost by ~40% vs. always using GPT-4. Bulk Google Translate path saves another tier of cost for users on Economy plan. Response caching removes repeat spend on identical chunks, which matters for documents with boilerplate sections.",
+        "A malformed 200 is still a failure. Provider responses are validated for shape before being accepted, because a truncated or empty translation that arrives with HTTP 200 is worse than an error — it reaches the customer looking finished.",
+        "Refuse rather than half-deliver: when every provider in the chain fails, the job fails loudly and the page is refunded. A partially translated document handed over as complete destroys trust far more cheaply than an honest error does.",
       ],
       ru: [
         "База-на-контекст: три независимых PostgreSQL-базы (translate_bot, translate_bot_staging, translate_web). Падение одной не валит остальные. Аналогично для Redis.",
         "Защита от race conditions: списание страниц через SELECT FOR UPDATE в атомарной транзакции; активация подписки через partial unique index («одна активная подписка на юзера»).",
         "Security: JWT с blacklist в БД (мгновенный revoke при logout), Fernet-шифрование пользовательских API-ключей, Flask-Limiter на регистрацию (5/час) и логин (10/мин) на Redis.",
-        "Cost engineering: smart-роутинг моделей снизил среднюю стоимость страницы перевода LLM примерно на 40% против «всегда GPT-4». Bulk-путь через Google Translate даёт ещё ярус экономии для тарифа «Эконом».",
+        "Cost engineering: smart-роутинг моделей снизил среднюю стоимость страницы перевода LLM примерно на 40% против «всегда GPT-4». Bulk-путь через Google Translate даёт ещё ярус экономии для тарифа «Эконом». Кэширование ответов убирает повторную оплату одинаковых чанков — это заметно на документах с типовыми разделами.",
+        "Некорректный ответ с кодом 200 — это тоже сбой. Ответы провайдера проверяются на структуру до того, как приняты: обрезанный или пустой перевод, пришедший с HTTP 200, хуже ошибки — он доходит до клиента с видом готового.",
+        "Лучше отказать, чем отдать половину: когда падают все провайдеры в цепочке, задача честно завершается ошибкой, а страница возвращается на баланс. Недопереведённый документ, выданный за готовый, разрушает доверие куда дешевле, чем честная ошибка.",
       ],
     },
     result: {
       en: [
         "In production on bookahtranslate.tech (web) and via @BookahTranslateBot (Telegram). Built and operated solo, paying users, organic growth.",
         "Acts as my live laboratory for AI-native product engineering: every PR ships to a real service with real users, real billing, real failure modes — not a sandbox.",
+        "The reliability patterns here are published as standalone, readable repositories: the release gate as llm-eval-harness (47 tests), grounded retrieval that refuses rather than guesses as rag-grounded (40 tests), and tool calling as mcp-toolserver (50 tests). Running a paid service is what taught me which of these actually matter.",
       ],
       ru: [
         "В продакшене на bookahtranslate.tech (веб) и через @BookahTranslateBot (Telegram). Построено и поддерживается в одиночку, платящие пользователи, органический рост.",
         "Работает как живая лаборатория для AI-native product engineering: каждый PR катится в реальный сервис с реальными пользователями, реальным биллингом и реальными failure modes — не песочница.",
+        "Подходы к надёжности отсюда выложены отдельными читаемыми репозиториями: релизный гейт — llm-eval-harness (47 тестов), grounded-поиск, который отказывается вместо выдумки, — rag-grounded (40 тестов), вызов инструментов — mcp-toolserver (50 тестов). Именно работа платного сервиса показала, какие из них действительно важны.",
       ],
     },
     snippets: [
@@ -117,6 +129,78 @@ export const caseStudies: Partial<Record<ProjectSlug, CaseStudy>> = {
         return ModelChoice.CLAUDE_HAIKU   # cheap for bulk
 
     return ModelChoice.GPT_4O
+`,
+      },
+      {
+        label: {
+          en: "Provider fallback — a user's job should not die with one vendor",
+          ru: "Фолбэк провайдеров — задача пользователя не умирает вместе с вендором",
+        },
+        lang: "python",
+        code: `# Each failure class is retried differently: a timeout deserves another
+# attempt, a 400 does not. The chain degrades to a cheaper model rather
+# than returning an error to someone who already paid for the page.
+RETRYABLE = (ProviderTimeout, RateLimited, ProviderUnavailable)
+
+def translate_chunk(chunk: str, chain: list[ModelChoice]) -> Translation:
+    failures: list[str] = []
+
+    for model in chain:
+        for attempt in range(MAX_ATTEMPTS):
+            try:
+                result = call_provider(model, chunk, timeout=timeout_for(model))
+                if not result.is_well_formed():
+                    # A malformed response is a failure even with HTTP 200.
+                    raise MalformedResponse(model)
+                if failures:
+                    log.warning("recovered after %s", ",".join(failures))
+                    metrics.incr("translate.fallback", tags={"to": model.name})
+                return result
+
+            except RETRYABLE as exc:
+                failures.append(f"{model.name}:{type(exc).__name__}")
+                sleep(backoff(attempt))          # exponential, jittered
+            except MalformedResponse as exc:
+                failures.append(f"{model.name}:malformed")
+                break                            # retrying won't fix the prompt
+            except ProviderRefused:
+                failures.append(f"{model.name}:refused")
+                break                            # next model, not next attempt
+
+    # Every provider is down: fail loudly and refund the page, never
+    # hand the user a half-translated document as if it succeeded.
+    raise AllProvidersFailed(failures)
+`,
+      },
+      {
+        label: {
+          en: "Release gate — a prompt change must prove it did no harm",
+          ru: "Релизный гейт — изменение промпта обязано доказать, что не навредило",
+        },
+        lang: "python",
+        code: `def gate(report: RunReport, baseline: Baseline) -> GateResult:
+    """Block a deploy when quality drops. Published as llm-eval-harness."""
+    violations = []
+
+    if report.hallucination_rate > MAX_HALLUCINATION_RATE:
+        violations.append(f"hallucination {report.hallucination_rate:.1%}")
+    if report.mean_accuracy < MIN_ACCURACY:
+        violations.append(f"accuracy {report.mean_accuracy:.3f}")
+    if report.cost_per_page > baseline.cost_per_page * COST_CEILING:
+        violations.append(f"cost/page {report.cost_per_page:.4f}")
+
+    # The averages above can all pass while specific documents break.
+    # Per-case comparison is what actually catches a regression.
+    regressions = [
+        case.id for case in report.cases
+        if baseline.passed(case.id) and not case.passed
+    ]
+
+    return GateResult(
+        passed=not violations and not regressions,
+        violations=violations,
+        regressions=regressions,
+    )
 `,
       },
     ],
