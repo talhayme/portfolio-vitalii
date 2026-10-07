@@ -35,7 +35,7 @@ export default function Sidebar({ locale }: { locale: Locale }) {
             {locale === "ru" ? ui.hero.nameRu : ui.hero.name}
           </div>
           <div className="text-xs text-[var(--fg-muted)] mt-1">
-            Senior Fullstack · AI/SaaS
+            Senior AI Engineer · LLM · RAG · MCP
           </div>
         </Link>
 

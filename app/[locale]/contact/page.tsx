@@ -61,8 +61,8 @@ export default async function ContactPage({
       <ul>
         <li>
           {locale === "ru"
-            ? "Senior Fullstack / AI Engineer / Tech Lead роли"
-            : "Senior Fullstack / AI Engineer / Tech Lead roles"}
+            ? "Senior AI Engineer / LLM Engineer / AI Tech Lead"
+            : "Senior AI Engineer / LLM Engineer / AI Tech Lead"}
         </li>
         <li>
           {locale === "ru"

@@ -15,8 +15,8 @@ export default async function AboutPage({
       <h1>{locale === "ru" ? "Обо мне" : "About"}</h1>
       <p className="text-xl text-[var(--fg-muted)] -mt-2 mb-8">
         {locale === "ru"
-          ? "Как я попал из QA в senior fullstack и зачем строю свой AI-SaaS параллельно с основной работой."
-          : "How I went from QA to senior fullstack — and why I'm building my own AI-SaaS in parallel with a full-time job."}
+          ? "Как 13 лет инженерного опыта привели к LLM-продуктам в продакшене — и почему AI-часть держится именно на этом фундаменте."
+          : "How 13 years of engineering led to LLM products in production — and why the AI work holds up precisely because of that foundation."}
       </p>
 
       {ui.about.paragraphs[locale].map((para, i) => (

@@ -1,5 +1,3 @@
-import type { Locale } from "./i18n";
-
 export type ProjectSlug =
   | "bookahtranslate"
   | "coperniq"
@@ -156,6 +154,60 @@ export const projects: ProjectMeta[] = [
   },
 ];
 
+export type OpenSourceRepo = {
+  name: string;
+  href: string;
+  tagline: { en: string; ru: string };
+  detail: { en: string; ru: string };
+  facts: string[];
+};
+
+/**
+ * Standalone demos extracted from production patterns. Each runs offline —
+ * no API key, no network — so a reader can clone and run in under a minute.
+ */
+export const openSource: OpenSourceRepo[] = [
+  {
+    name: "llm-eval-harness",
+    href: "https://github.com/talhayme/llm-eval-harness",
+    tagline: {
+      en: "Evaluation harness with a CI release gate",
+      ru: "Eval-харнесс с релизным гейтом в CI",
+    },
+    detail: {
+      en: "Golden sets, groundedness and hallucination metrics, absolute thresholds and per-case regression against a baseline. Exits non-zero so CI blocks a change that makes quality worse — and CI asserts the gate itself rejects a known-bad run.",
+      ru: "Golden-наборы, метрики groundedness и галлюцинаций, абсолютные пороги и пер-кейсовое сравнение с baseline. Возвращает ненулевой код, чтобы CI блокировал ухудшение — а сам CI проверяет, что гейт отклоняет заведомо плохой прогон.",
+    },
+    facts: ["Python", "47 tests · 91% coverage", "offline"],
+  },
+  {
+    name: "mcp-toolserver",
+    href: "https://github.com/talhayme/mcp-toolserver",
+    tagline: {
+      en: "An MCP server built the way a production one should be",
+      ru: "MCP-сервер, сделанный как production-сервер",
+    },
+    detail: {
+      en: "Strict JSON schemas so the model calls correctly first time, errors written for the model to act on rather than stack traces, and a calculator sandboxed against code execution through four independent layers.",
+      ru: "Строгие JSON-схемы, чтобы модель вызывала инструмент правильно с первого раза, ошибки, написанные для модели, а не стектрейсы, и калькулятор, защищённый от выполнения кода четырьмя независимыми слоями.",
+    },
+    facts: ["Python", "50 tests · 84% coverage", "Claude Desktop ready"],
+  },
+  {
+    name: "rag-grounded",
+    href: "https://github.com/talhayme/rag-grounded",
+    tagline: {
+      en: "A RAG pipeline that refuses rather than guesses",
+      ru: "RAG-пайплайн, который отказывается, а не выдумывает",
+    },
+    detail: {
+      en: "Calibrated confidence floors, hybrid dense + lexical retrieval, and citations carrying source and heading. Its real weaknesses are pinned as tests so the README cannot quietly become untrue.",
+      ru: "Откалиброванные пороги уверенности, гибридный поиск (векторный + лексический) и цитаты с источником и заголовком. Реальные слабости зафиксированы тестами, чтобы README не стал незаметно неправдой.",
+    },
+    facts: ["Python", "40 tests · 92% coverage", "offline"],
+  },
+];
+
 export const ui = {
   nav: {
     home: { en: "Overview", ru: "Обзор" },
@@ -170,14 +222,14 @@ export const ui = {
     name: "Vitalii Bogachev",
     nameRu: "Виталий Богачев",
     title: {
-      en: "Senior fullstack engineer & AI/SaaS founder.",
-      ru: "Senior fullstack-инженер и AI/SaaS-основатель.",
+      en: "Senior AI Engineer — LLM, RAG, MCP.",
+      ru: "Senior AI Engineer — LLM, RAG, MCP.",
     },
     description: {
-      en: "13 years shipping production systems. Currently building AI-powered SaaS products with TypeScript, Python, and LLMs — for fintech, crypto, and solar industries.",
-      ru: "13 лет в production-разработке. Сейчас строю AI-SaaS продукты на TypeScript, Python и LLM — для финтеха, крипты и solar-индустрии.",
+      en: "I build LLM products that run in production, not demos. Since 2024 I have built and operated BookahTranslate, a paid AI document-translation SaaS, and helped product teams adopt RAG, custom MCP servers and AI coding agents. Underneath is 13 years of engineering — high-load fintech and SaaS, plus a QA-automation background — which is why my AI systems ship with evals, regression gates, observability and provider fallback.",
+      ru: "Строю LLM-продукты, которые работают в продакшене, а не в демо. С 2024 года веду BookahTranslate — платный AI-сервис перевода документов — и помогаю продуктовым командам внедрять RAG, кастомные MCP-серверы и AI-агентов для разработки. В основе — 13 лет инженерного опыта: высоконагруженный финтех, SaaS и бэкграунд в QA-автоматизации. Поэтому мои AI-системы выходят с evals, регрессионными гейтами, observability и фолбэком между провайдерами.",
     },
-    location: { en: "Moscow · remote-friendly · C1 English", ru: "Москва · удалённо · английский C1" },
+    location: { en: "Moscow · open to remote · C1 English", ru: "Москва · открыт к удалённой работе · английский C1" },
   },
   contact: {
     email: "bogachev.vitaliy91test@gmail.com",
@@ -187,23 +239,41 @@ export const ui = {
   },
   stackCategories: [
     {
-      title: { en: "Frontend", ru: "Frontend" },
-      items: ["TypeScript", "React", "Redux Toolkit", "React Query", "Next.js", "Vue", "Jinja2", "Tailwind CSS"],
+      title: { en: "LLM & AI", ru: "LLM и AI" },
+      items: [
+        "OpenAI API (GPT-4 / GPT-4o)",
+        "Anthropic Claude API",
+        "RAG",
+        "Embeddings & vector databases",
+        "Semantic search",
+        "MCP servers & tool calling",
+        "LLM evaluation",
+        "Prompt regression testing",
+        "LLM observability",
+        "Prompt-injection testing",
+        "Inference cost optimization",
+        "Claude Code · Codex · Cursor",
+      ],
+    },
+    {
+      title: { en: "AI engineering practices", ru: "AI-инженерные практики" },
+      items: [
+        "Golden-set evals",
+        "Release gates on quality metrics",
+        "Hallucination & groundedness scoring",
+        "Provider / model fallback",
+        "Prompt versioning",
+        "Response caching",
+        "Request & pipeline tracing",
+      ],
     },
     {
       title: { en: "Backend", ru: "Backend" },
-      items: ["Node.js", "Nest.js", "Express", "Python", "Flask", "Django", "FastAPI", "SQLAlchemy", "Celery"],
+      items: ["Python", "Node.js", "Nest.js", "Express", "FastAPI", "Flask", "Django / DRF", "SQLAlchemy", "Celery"],
     },
     {
-      title: { en: "AI & LLM", ru: "AI и LLM" },
-      items: [
-        "OpenAI API",
-        "GPT-4 / GPT-4o",
-        "Anthropic Claude API",
-        "Google Cloud Translation",
-        "Prompt Engineering",
-        "Generative AI",
-      ],
+      title: { en: "Frontend", ru: "Frontend" },
+      items: ["TypeScript", "React", "Redux Toolkit", "React Query", "Next.js", "Vue", "Jinja2", "Tailwind CSS"],
     },
     {
       title: { en: "Data", ru: "Данные" },
@@ -250,18 +320,20 @@ export const ui = {
   about: {
     paragraphs: {
       en: [
-        "I started in IT 13 years ago as a QA engineer — first manual, then leading a small QA team and building Python + Selenium automation. That hands-on testing background still informs how I write production code: I think about edge cases first, and I write tests as I go, not after.",
-        "Around 2018 I moved into backend development at Smart Trade (Germany), designing REST APIs for a retail trading SaaS. Then 3.5 years at Bequant — an institutional crypto exchange with its own matching engine — where I led the trading terminal UI (10K events/min in React + Redux) and built the GraphQL aggregation layer that cut backend load by 45%.",
-        "Since late 2022 I've been at Coperniq, a US-based SaaS for solar-industry project management. I drove the monolith → microservices migration (5 services), cut API p50 from 1.2s to 180ms, and shipped a real-time field-sync module for 3000+ concurrent users. Team Lead for 4 devs.",
-        "In parallel since 2024, I'm running my own AI-SaaS — BookahTranslate (bookahtranslate.tech) and AthenaDev (athenadev.tech). LLM-powered document translation with subscription billing, OAuth via Google/VK/Telegram, and a Telegram bot. Built solo, in production, paying users. This is where I work hands-on with OpenAI GPT-4 and Anthropic Claude APIs daily.",
-        "What I'm interested in now: AI-native product engineering. Not 'add a chatbot,' but building products where LLMs are the core mechanic — with proper observability, fallbacks, prompt versioning, and cost engineering.",
+        "I build LLM products that reach production. Since 2024 that has mostly meant BookahTranslate — an AI document-translation SaaS I built and operate solo, with paying subscribers. The pipeline runs on GPT-4 and Claude and handles PDF, EPUB and DOCX up to 300+ pages while preserving layout: parsing, chunking, context assembly, translation, reassembly.",
+        "The interesting part of that work is never the prompt. It is automatic fallback between providers and models when one times out or rate-limits; response caching and model routing to keep inference costs down; and an evaluation set that gates every prompt or model change — 80+ tests, accuracy, relevance, hallucination rate, latency and cost, with automated regression.",
+        "Alongside it I do AI-implementation consulting for fintech, legal-tech and B2B SaaS teams: RAG over corporate knowledge bases with tuned retrieval and grounded answers, custom MCP servers connecting LLMs to internal tools, and rolling out Claude Code, Codex and Cursor into engineering workflows with quality gates before release.",
+        "Three standalone demos on GitHub show those patterns in readable form — an eval harness with a CI release gate, an MCP server, and a RAG pipeline that refuses rather than guesses. All run offline, with tests and green CI.",
+        "Underneath all of this is 13 years of engineering. I started in QA — manual, then leading a team and writing Python + Selenium automation — which is why I think about edge cases first and write tests as I go. Then backend at Smart Trade (Germany), 3.5 years at Bequant (an institutional crypto exchange: trading terminal at 10K events/min, a GraphQL layer that cut backend load 45%), and Coperniq, a US solar SaaS, where I led 4 engineers, drove the monolith → microservices migration and cut API p50 from 1.2s to 180ms.",
+        "That foundation is the reason the AI work holds up. Anyone can call an LLM API; the difficulty is making it survive contact with real users, real failure modes and a real bill.",
       ],
       ru: [
-        "В IT я 13 лет, начинал QA-инженером — сначала ручное тестирование, потом руководил небольшой QA-командой и писал автотесты на Python + Selenium. Эта база сильно влияет на то, как я пишу production-код: думаю про edge-кейсы заранее и пишу тесты параллельно с кодом, а не после.",
-        "Примерно в 2018 перешёл в backend — Smart Trade (Германия), REST API для SaaS автоматизации retail-трейдинга. Затем 3.5 года Bequant — институциональная криптобиржа с собственным matching-движком. Вёл фронт торгового терминала (10K событий/мин на React + Redux), сделал GraphQL-агрегацию, которая снизила нагрузку на backend на 45%.",
-        "С конца 2022 — Coperniq, американский SaaS для solar-индустрии. Провёл миграцию монолита в микросервисы (5 сервисов), снизил p50 API с 1.2с до 180мс, сделал real-time синхронизацию полевых работ для 3000+ одновременных пользователей. Team Lead команды из 4 человек.",
-        "Параллельно с 2024 — мой собственный AI-SaaS: BookahTranslate (bookahtranslate.tech) и AthenaDev (athenadev.tech). Перевод документов через LLM с подписочной монетизацией, OAuth через Google/VK/Telegram, Telegram-бот. Делал в одиночку, в продакшене, есть платящие пользователи. Здесь я каждый день работаю с OpenAI GPT-4 и Anthropic Claude API.",
-        "Что меня интересует сейчас: AI-native product engineering. Не «добавить чат-бот», а строить продукты, где LLM — это core-механика. С правильной observability, fallback-ами, версионированием промптов и cost engineering.",
+        "Я строю LLM-продукты, которые доходят до продакшена. С 2024 года это в основном BookahTranslate — AI-сервис перевода документов, который я сделал и веду в одиночку, с платящими подписчиками. Пайплайн работает на GPT-4 и Claude, обрабатывает PDF, EPUB и DOCX до 300+ страниц с сохранением вёрстки: парсинг, чанкинг, сборка контекста, перевод, пересборка документа.",
+        "Самое интересное в этой работе — никогда не промпт. Это автоматический фолбэк между провайдерами и моделями, когда один таймаутит или упирается в рейт-лимит; кэширование ответов и роутинг между моделями, чтобы держать стоимость инференса под контролем; и evaluation-набор, через который проходит каждое изменение промпта или модели — 80+ тестов на точность, релевантность, уровень галлюцинаций, задержку и стоимость, с автоматической регрессией.",
+        "Параллельно занимаюсь AI-внедрением для команд в финтехе, legal-tech и B2B SaaS: RAG над корпоративными базами знаний с настроенным ретривалом и grounded-ответами, кастомные MCP-серверы, связывающие LLM с внутренними сервисами, и внедрение Claude Code, Codex и Cursor в рабочие процессы разработки с гейтами качества перед релизом.",
+        "Три отдельных демо на GitHub показывают эти подходы в читаемом виде — eval-харнесс с релизным гейтом в CI, MCP-сервер и RAG-пайплайн, который отказывается отвечать вместо того, чтобы выдумывать. Всё запускается офлайн, с тестами и зелёным CI.",
+        "В основе всего этого — 13 лет инженерного опыта. Начинал в QA: ручное тестирование, потом руководство командой и автотесты на Python + Selenium — поэтому я думаю про edge-кейсы заранее и пишу тесты параллельно с кодом. Затем backend в Smart Trade (Германия), 3.5 года в Bequant (институциональная криптобиржа: торговый терминал на 10K событий/мин, GraphQL-слой, снизивший нагрузку на backend на 45%) и Coperniq, американский solar-SaaS, где я вёл команду из 4 инженеров, провёл миграцию монолита в микросервисы и снизил p50 API с 1.2с до 180мс.",
+        "Именно этот фундамент — причина, по которой AI-часть выдерживает нагрузку. Вызвать LLM API может кто угодно; сложность в том, чтобы это пережило встречу с реальными пользователями, реальными сбоями и реальным счётом за инференс.",
       ],
     },
   },

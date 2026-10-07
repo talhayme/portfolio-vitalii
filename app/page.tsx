@@ -8,10 +8,10 @@ export default function RootPage() {
           Vitalii Bogachev · Portfolio
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">
-          Senior Fullstack Engineer
+          Senior AI Engineer
         </h1>
         <p className="text-[var(--fg-muted)] mb-10">
-          AI/SaaS founder. 13 years shipping production systems.
+          LLM, RAG, MCP. Production LLM products, not demos.
         </p>
         <div className="flex justify-center gap-3">
           <Link

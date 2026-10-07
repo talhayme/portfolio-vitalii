@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n";
-import { ui, projects } from "@/lib/content";
+import { ui, projects, openSource } from "@/lib/content";
 import ProjectCard from "@/components/ProjectCard";
 import MetricCard from "@/components/MetricCard";
 
@@ -61,6 +61,43 @@ export default async function HomePage({
         </div>
       </Link>
 
+      <h2 id="open-source">
+        {locale === "ru" ? "Открытый код" : "Open source"}
+      </h2>
+      <p className="text-[var(--fg-muted)]">
+        {locale === "ru"
+          ? "Три отдельных демо, снятых с production-паттернов. Каждое запускается офлайн — без API-ключа и сети — с тестами и зелёным CI."
+          : "Three standalone demos extracted from production patterns. Each runs offline — no API key, no network — with tests and green CI."}
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose mb-12">
+        {openSource.map((repo) => (
+          <a
+            key={repo.name}
+            href={repo.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block group border border-[var(--border)] hover:border-[var(--accent)] rounded-lg p-5 transition-all bg-[var(--bg-elevated)] no-underline"
+          >
+            <div className="font-mono text-sm text-[var(--accent)] mb-2 break-all">
+              {repo.name}
+            </div>
+            <div className="text-sm font-medium mb-2 group-hover:text-[var(--accent)] transition-colors">
+              {repo.tagline[locale]}
+            </div>
+            <p className="text-xs text-[var(--fg-muted)] mb-4 leading-relaxed">
+              {repo.detail[locale]}
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {repo.facts.map((f) => (
+                <span key={f} className="pill">
+                  {f}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+
       <h2 id="featured">
         {locale === "ru" ? "Текущий продукт" : "Current product"}
       </h2>
@@ -104,8 +141,8 @@ export default async function HomePage({
       <h2 id="cta">{locale === "ru" ? "Открыт к работе" : "Open to work"}</h2>
       <p>
         {locale === "ru"
-          ? "Senior Fullstack / AI Engineer / Tech Lead. Удалёнка или Москва. Контракты, full-time, advisor-роли."
-          : "Senior Fullstack / AI Engineer / Tech Lead. Remote or Moscow. Contract, full-time, advisor roles."}
+          ? "Senior AI Engineer — LLM, RAG, MCP. Удалённо или Москва. Контракты, full-time, advisor-роли."
+          : "Senior AI Engineer — LLM, RAG, MCP. Remote or Moscow. Contract, full-time, advisor roles."}
       </p>
       <p>
         <Link href={`/${locale}/contact`}>
