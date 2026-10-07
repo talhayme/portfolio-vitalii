@@ -64,11 +64,11 @@ export const caseStudies: Partial<Record<ProjectSlug, CaseStudy>> = {
     },
     result: {
       en: [
-        "In production on bookahtranslate.tech (web) and via @BookahTranslateBot (Telegram). Solo founder, paying users, organic growth.",
+        "In production on bookahtranslate.tech (web) and via @BookahTranslateBot (Telegram). Built and operated solo, paying users, organic growth.",
         "Acts as my live laboratory for AI-native product engineering: every PR ships to a real service with real users, real billing, real failure modes — not a sandbox.",
       ],
       ru: [
-        "В продакшене на bookahtranslate.tech (веб) и через @BookahTranslateBot (Telegram). Соло-основатель, платящие пользователи, органический рост.",
+        "В продакшене на bookahtranslate.tech (веб) и через @BookahTranslateBot (Telegram). Построено и поддерживается в одиночку, платящие пользователи, органический рост.",
         "Работает как живая лаборатория для AI-native product engineering: каждый PR катится в реальный сервис с реальными пользователями, реальным биллингом и реальными failure modes — не песочница.",
       ],
     },

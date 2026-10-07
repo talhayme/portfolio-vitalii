@@ -22,8 +22,8 @@ export const projects: ProjectMeta[] = [
     year: "2024 — Now",
     company: "BookahTranslate / AthenaDev",
     role: {
-      en: "Founder & Lead Developer",
-      ru: "Основатель и ведущий разработчик",
+      en: "CTO",
+      ru: "CTO",
     },
     oneLiner: {
       en: "AI-powered document translation SaaS. PDF, EPUB, DOCX up to 300+ pages with layout preservation, powered by GPT-4 and Claude.",
@@ -56,7 +56,7 @@ export const projects: ProjectMeta[] = [
       { label: "Live", href: "https://bookahtranslate.tech" },
       { label: "Landing", href: "https://athenadev.tech" },
     ],
-    status: { en: "In production · solo founder", ru: "В продакшене · соло-основатель" },
+    status: { en: "In production · built solo", ru: "В продакшене · построено в одиночку" },
   },
   {
     slug: "coperniq",
