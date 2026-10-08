@@ -71,8 +71,8 @@ export default async function ContactPage({
         </li>
         <li>
           {locale === "ru"
-            ? "Удалённая работа или Москва. Готов к командировкам."
-            : "Remote or Moscow. Open to travel."}
+            ? "Удалённая работа, база — Тбилиси. Готов к командировкам."
+            : "Remote, based in Tbilisi (Georgia). Open to travel."}
         </li>
         <li>
           {locale === "ru"

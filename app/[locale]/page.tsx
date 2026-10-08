@@ -141,8 +141,8 @@ export default async function HomePage({
       <h2 id="cta">{locale === "ru" ? "Открыт к работе" : "Open to work"}</h2>
       <p>
         {locale === "ru"
-          ? "Senior AI Engineer — LLM, RAG, MCP. Удалённо или Москва. Контракты, full-time, advisor-роли."
-          : "Senior AI Engineer — LLM, RAG, MCP. Remote or Moscow. Contract, full-time, advisor roles."}
+          ? "Senior AI Engineer — LLM, RAG, MCP. Удалённо, база — Тбилиси. Контракты, full-time, advisor-роли."
+          : "Senior AI Engineer — LLM, RAG, MCP. Remote, based in Tbilisi. Contract, full-time, advisor roles."}
       </p>
       <p>
         <Link href={`/${locale}/contact`}>

@@ -229,7 +229,7 @@ export const ui = {
       en: "I build LLM products that run in production, not demos. Since 2024 I have built and operated BookahTranslate, a paid AI document-translation SaaS, and helped product teams adopt RAG, custom MCP servers and AI coding agents. Underneath is 13 years of engineering — high-load fintech and SaaS, plus a QA-automation background — which is why my AI systems ship with evals, regression gates, observability and provider fallback.",
       ru: "Строю LLM-продукты, которые работают в продакшене, а не в демо. С 2024 года веду BookahTranslate — платный AI-сервис перевода документов — и помогаю продуктовым командам внедрять RAG, кастомные MCP-серверы и AI-агентов для разработки. В основе — 13 лет инженерного опыта: высоконагруженный финтех, SaaS и бэкграунд в QA-автоматизации. Поэтому мои AI-системы выходят с evals, регрессионными гейтами, observability и фолбэком между провайдерами.",
     },
-    location: { en: "Moscow · open to remote · C1 English", ru: "Москва · открыт к удалённой работе · английский C1" },
+    location: { en: "Tbilisi, Georgia · open to remote · C1 English", ru: "Тбилиси, Грузия · открыт к удалённой работе · английский C1" },
   },
   contact: {
     email: "bogachev.vitaliy91test@gmail.com",
