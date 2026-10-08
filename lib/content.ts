@@ -241,7 +241,7 @@ export const ui = {
     {
       title: { en: "LLM & AI", ru: "LLM и AI" },
       items: [
-        "OpenAI API (GPT-4 / GPT-4o)",
+        "OpenAI API",
         "Anthropic Claude API",
         "RAG",
         "Embeddings & vector databases",
