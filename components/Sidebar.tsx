@@ -53,6 +53,14 @@ export default function Sidebar({ locale }: { locale: Locale }) {
               {item.label}
             </Link>
           ))}
+          {/* External: the blog is a separate site, so it is a plain anchor. */}
+          <a
+            href={ui.blogUrl}
+            className="text-sm py-1.5 px-2 -mx-2 rounded transition-colors text-[var(--fg-muted)] hover:text-[var(--fg)] flex items-center gap-1.5"
+          >
+            {ui.nav.blog[locale]}
+            <span aria-hidden className="text-[var(--fg-subtle)] text-xs">↗</span>
+          </a>
         </nav>
 
         <div className="mb-6">

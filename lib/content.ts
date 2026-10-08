@@ -214,6 +214,7 @@ export const ui = {
     athenadev: { en: "AthenaDev (consulting)", ru: "AthenaDev (консалтинг)" },
     work: { en: "Selected Work", ru: "Проекты" },
     notes: { en: "Engineering Notes", ru: "Заметки" },
+    blog: { en: "Blog", ru: "Блог" },
     about: { en: "About", ru: "Обо мне" },
     stack: { en: "Stack", ru: "Стек" },
     contact: { en: "Contact", ru: "Контакты" },
@@ -231,6 +232,7 @@ export const ui = {
     },
     location: { en: "Tbilisi, Georgia · open to remote · C1 English", ru: "Тбилиси, Грузия · открыт к удалённой работе · английский C1" },
   },
+  blogUrl: "https://talhayme.github.io/blog",
   contact: {
     email: "bogachev.vitaliy91test@gmail.com",
     telegram: "tenkuioo",
