@@ -1,7 +1,18 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n";
 import { projects } from "@/lib/content";
 import ProjectCard from "@/components/ProjectCard";
+import { pageAlternates } from "@/lib/site";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: pageAlternates(locale, "/work") };
+}
 
 export default async function WorkListPage({
   params,

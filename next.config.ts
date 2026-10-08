@@ -12,7 +12,12 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   basePath,
   // Tell client-side Link components about the prefix.
-  env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+    // Where the site is actually served from. Set SITE_URL in the build
+    // environment when a custom domain is in place.
+    NEXT_PUBLIC_SITE_URL: process.env.SITE_URL ?? "https://talhayme.github.io",
+  },
 };
 
 export default nextConfig;

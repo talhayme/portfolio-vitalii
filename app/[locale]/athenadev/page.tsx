@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n";
@@ -5,12 +6,21 @@ import { athenadev } from "@/lib/athenadev";
 import { ui } from "@/lib/content";
 import CodeBlock from "@/components/CodeBlock";
 import MetricCard from "@/components/MetricCard";
+import { pageAlternates } from "@/lib/site";
 
-export const metadata = {
-  title: "AthenaDev — AI Integration Consultancy",
-  description:
-    "Embedding Claude Code, MCP servers, and LLM workflows into mid-size product teams. Case studies in fintech, legal, and SaaS.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "AthenaDev — AI Integration Consultancy",
+    description:
+      "Embedding Claude Code, MCP servers, and LLM workflows into mid-size product teams. Case studies in fintech, legal, and SaaS.",
+    alternates: pageAlternates(locale, "/athenadev"),
+  };
+}
 
 export default async function AthenaDevPage({
   params,

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n";
@@ -5,6 +6,18 @@ import { projects, type ProjectSlug } from "@/lib/content";
 import MetricCard from "@/components/MetricCard";
 import { caseStudies } from "@/lib/case-studies";
 import CodeBlock from "@/components/CodeBlock";
+import { pageAlternates } from "@/lib/site";
+
+// Each article gets its own canonical URL — without it every note would
+// collapse onto the section page in search results.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  return { alternates: pageAlternates(locale, `/work/${slug}`) };
+}
 
 export function generateStaticParams() {
   const slugs = projects.map((p) => p.slug);

@@ -1,9 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n";
 import { ui, projects, openSource } from "@/lib/content";
 import ProjectCard from "@/components/ProjectCard";
 import MetricCard from "@/components/MetricCard";
+import { pageAlternates } from "@/lib/site";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: pageAlternates(locale, "") };
+}
 
 export default async function HomePage({
   params,

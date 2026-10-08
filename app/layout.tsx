@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { siteUrl } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://athenadev.tech"),
+  // Must match where the site is actually served from. A canonical that
+  // points at a different domain tells crawlers the real copy lives there.
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Vitalii Bogachev — Senior AI Engineer (LLM, RAG, MCP)",
     template: "%s · Vitalii Bogachev",
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
     title: "Vitalii Bogachev — Senior AI Engineer (LLM, RAG, MCP)",
     description:
       "I build LLM products that run in production, not demos. RAG, MCP servers, evals and regression gates — on GPT-4 and Claude.",
-    url: "https://athenadev.tech",
+    url: siteUrl,
     siteName: "Vitalii Bogachev",
   },
   twitter: {
