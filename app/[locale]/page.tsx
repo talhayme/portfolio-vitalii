@@ -46,7 +46,7 @@ export default async function HomePage({
       <hr />
 
       <h2 id="athenadev">
-        {locale === "ru" ? "Моя компания" : "My company"}
+        {locale === "ru" ? "Чем занимаюсь сейчас" : "Current work"}
       </h2>
       <Link
         href={`/${locale}/athenadev`}
