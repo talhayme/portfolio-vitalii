@@ -160,6 +160,7 @@ export type OpenSourceRepo = {
   tagline: { en: string; ru: string };
   detail: { en: string; ru: string };
   facts: string[];
+  article?: string;
 };
 
 /**
@@ -179,6 +180,7 @@ export const openSource: OpenSourceRepo[] = [
       ru: "CI всегда гоняет новые тесты на новом коде. pr-witness запускает тесты базовой ветки на коде PR, сверяет заявления из описания («412 passed») с реальным прогоном и подписывает результат через GitHub attestations. Измерено на размеченном корпусе: P 0.91 / R 1.00.",
     },
     facts: ["Python", "115 tests · PyPI · GitHub Action", "Claude Code plugin"],
+    article: "https://talhayme.github.io/blog/ci-only-runs-new-tests/",
   },
   {
     name: "ftgate",
@@ -192,6 +194,7 @@ export const openSource: OpenSourceRepo[] = [
       ru: "Регрессионные проверки малых дообученных моделей на вызове инструментов: побайтовое сравнение обучающего и runtime-промпта (нашло, что Ollama отдаёт модели дамп Go-структуры вместо схемы инструмента), линтер датасетов с токенизатором модели и оценка вызовов base/tuned/quantized. Обследованы шесть публичных датасетов.",
     },
     facts: ["Python + Go", "39 tests · PyPI", "3 upstream reports"],
+    article: "https://talhayme.github.io/blog/six-tool-calling-datasets/",
   },
   {
     name: "llm-eval-harness",

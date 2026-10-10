@@ -82,8 +82,8 @@ export default async function HomePage({
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose mb-12">
         {openSource.map((repo) => (
+          <div key={repo.name} className="flex flex-col gap-2">
           <a
-            key={repo.name}
             href={repo.href}
             target="_blank"
             rel="noopener noreferrer"
@@ -106,6 +106,17 @@ export default async function HomePage({
               ))}
             </div>
           </a>
+          {repo.article && (
+            <a
+              href={repo.article}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[var(--fg-muted)] hover:text-[var(--accent)] no-underline px-1"
+            >
+              {locale === "ru" ? "Статья в блоге →" : "Read the write-up →"}
+            </a>
+          )}
+          </div>
         ))}
       </div>
 
