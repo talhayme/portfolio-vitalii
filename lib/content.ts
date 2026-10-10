@@ -168,6 +168,32 @@ export type OpenSourceRepo = {
  */
 export const openSource: OpenSourceRepo[] = [
   {
+    name: "pr-witness",
+    href: "https://github.com/talhayme/pr-witness",
+    tagline: {
+      en: "Catches an AI agent that edits the test to match the bug",
+      ru: "Ловит AI-агента, который правит тест под баг",
+    },
+    detail: {
+      en: "CI only ever runs the new tests against the new code. pr-witness runs the base branch's tests against the pull request's code, checks the PR description's claims (\"412 passed\") against the real run, and signs the result with GitHub attestations. Measured on a labelled corpus; P 0.91 / R 1.00.",
+      ru: "CI всегда гоняет новые тесты на новом коде. pr-witness запускает тесты базовой ветки на коде PR, сверяет заявления из описания («412 passed») с реальным прогоном и подписывает результат через GitHub attestations. Измерено на размеченном корпусе: P 0.91 / R 1.00.",
+    },
+    facts: ["Python", "115 tests · PyPI · GitHub Action", "Claude Code plugin"],
+  },
+  {
+    name: "ftgate",
+    href: "https://github.com/talhayme/ftgate",
+    tagline: {
+      en: "Does the runtime send the bytes the model was trained on?",
+      ru: "Отправляет ли рантайм те байты, на которых учили модель?",
+    },
+    detail: {
+      en: "Regression checks for small fine-tuned models on tool calling: a byte-level diff of training vs runtime prompts (found Ollama handing models a Go struct dump instead of the tool schema), a dataset linter with the model's own tokenizer, and tool-call evals base vs tuned vs quantised. Six public datasets surveyed.",
+      ru: "Регрессионные проверки малых дообученных моделей на вызове инструментов: побайтовое сравнение обучающего и runtime-промпта (нашло, что Ollama отдаёт модели дамп Go-структуры вместо схемы инструмента), линтер датасетов с токенизатором модели и оценка вызовов base/tuned/quantized. Обследованы шесть публичных датасетов.",
+    },
+    facts: ["Python + Go", "39 tests · PyPI", "3 upstream reports"],
+  },
+  {
     name: "llm-eval-harness",
     href: "https://github.com/talhayme/llm-eval-harness",
     tagline: {
@@ -332,7 +358,7 @@ export const ui = {
         "The interesting part of that work is never the prompt. It is automatic fallback between providers and models when one times out or rate-limits; response caching and model routing to keep inference costs down; and an evaluation set that gates every prompt or model change — 80+ tests, accuracy, relevance, hallucination rate, latency and cost, with automated regression.",
         "Alongside it I do AI-implementation consulting for fintech, legal-tech and B2B SaaS teams: RAG over corporate knowledge bases — sentence-aligned chunking at ~3,500 characters, hybrid dense and lexical retrieval, calibrated confidence floors that keep unsupported answers under 10% on the eval set — agent architectures over custom MCP servers with strict tool-call schemas and multi-step tool loops, and rolling out Claude Code, Codex and Cursor across client engineering teams with quality gates before release.",
         "A second product, Digital Psychologist, is where I compared fine-tuning against retrieval head to head: LangChain and FAISS for the retrieval layer with local sentence-transformer embeddings, and three interchangeable modes — retrieval-only, fine-tuned model, and hybrid — switchable by configuration, so the trade-off could be measured on one product rather than argued.",
-        "Three standalone demos on GitHub show those patterns in readable form — an eval harness with a CI release gate, an MCP server, and a RAG pipeline that refuses rather than guesses. All run offline, with tests and green CI.",
+        "Two open-source tools came out of this work. pr-witness runs the base branch's tests against a pull request's code and checks the PR's own claims against the real run — the combination CI never runs, and the way an AI agent's \"all tests pass\" gets verified rather than trusted. ftgate checks whether a fine-tuned small model is served the bytes it was trained on; its first week found Ollama handing models a Go struct dump instead of the tool schema and Qwen's official GGUFs embedding a pre-fix chat template, both reported upstream with measurements. Alongside them, three standalone demos — an eval harness with a CI release gate, an MCP server, and a RAG pipeline that refuses rather than guesses — all offline, with tests and green CI.",
         "Underneath all of this is 13 years of engineering. I started in QA — manual, then leading a team and writing Python + Selenium automation — which is why I think about edge cases first and write tests as I go. Then backend at Smart Trade (Germany), 3.5 years at Bequant (an institutional crypto exchange: trading terminal at 10K events/min, a GraphQL layer that cut backend load 45%), and Coperniq, a US solar SaaS, where I led 4 engineers, drove the monolith → microservices migration and cut API p50 from 1.2s to 180ms.",
         "That foundation is the reason the AI work holds up. Anyone can call an LLM API; the difficulty is making it survive contact with real users, real failure modes and a real bill.",
       ],
@@ -341,7 +367,7 @@ export const ui = {
         "Самое интересное в этой работе — никогда не промпт. Это автоматический фолбэк между провайдерами и моделями, когда один таймаутит или упирается в рейт-лимит; кэширование ответов и роутинг между моделями, чтобы держать стоимость инференса под контролем; и evaluation-набор, через который проходит каждое изменение промпта или модели — 80+ тестов на точность, релевантность, уровень галлюцинаций, задержку и стоимость, с автоматической регрессией.",
         "Параллельно занимаюсь AI-внедрением для команд в финтехе, legal-tech и B2B SaaS: RAG над корпоративными базами знаний — чанкинг по границам предложений (~3 500 символов), гибридный поиск (векторный + лексический), откалиброванные пороги уверенности, которые держат долю неподтверждённых ответов ниже 10% на eval-наборе, — агентные архитектуры поверх кастомных MCP-серверов со строгими схемами вызова инструментов и многошаговыми циклами, и внедрение Claude Code, Codex и Cursor в командах клиентов с гейтами качества перед релизом.",
         "Второй продукт, Digital Psychologist, — место, где я сравнил fine-tuning и retrieval напрямую: LangChain и FAISS для слоя поиска с локальными sentence-transformer эмбеддингами и три взаимозаменяемых режима — только поиск, дообученная модель и гибрид — переключаемые конфигурацией, чтобы компромисс можно было измерить на одном продукте, а не обсуждать теоретически.",
-        "Три отдельных демо на GitHub показывают эти подходы в читаемом виде — eval-харнесс с релизным гейтом в CI, MCP-сервер и RAG-пайплайн, который отказывается отвечать вместо того, чтобы выдумывать. Всё запускается офлайн, с тестами и зелёным CI.",
+        "Из этой работы выросли два open-source инструмента. pr-witness запускает тесты базовой ветки на коде pull request'а и сверяет заявления из описания PR с реальным прогоном — комбинация, которую CI не делает никогда, и способ проверять «все тесты проходят» от AI-агента, а не верить на слово. ftgate проверяет, получает ли дообученная малая модель те байты, на которых её учили; за первую неделю он нашёл, что Ollama отдаёт модели дамп Go-структуры вместо схемы инструмента, а в официальных GGUF Qwen зашит шаблон до фикса — оба случая отправлены авторам с замерами. Рядом — три отдельных демо: eval-харнесс с релизным гейтом в CI, MCP-сервер и RAG-пайплайн, который отказывается отвечать вместо того, чтобы выдумывать. Всё офлайн, с тестами и зелёным CI.",
         "В основе всего этого — 13 лет инженерного опыта. Начинал в QA: ручное тестирование, потом руководство командой и автотесты на Python + Selenium — поэтому я думаю про edge-кейсы заранее и пишу тесты параллельно с кодом. Затем backend в Smart Trade (Германия), 3.5 года в Bequant (институциональная криптобиржа: торговый терминал на 10K событий/мин, GraphQL-слой, снизивший нагрузку на backend на 45%) и Coperniq, американский solar-SaaS, где я вёл команду из 4 инженеров, провёл миграцию монолита в микросервисы и снизил p50 API с 1.2с до 180мс.",
         "Именно этот фундамент — причина, по которой AI-часть выдерживает нагрузку. Вызвать LLM API может кто угодно; сложность в том, чтобы это пережило встречу с реальными пользователями, реальными сбоями и реальным счётом за инференс.",
       ],
