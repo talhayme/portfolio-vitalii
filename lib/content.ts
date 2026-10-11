@@ -161,6 +161,8 @@ export type OpenSourceRepo = {
   detail: { en: string; ru: string };
   facts: string[];
   article?: string;
+  /** A second write-up, when the first one has a sequel worth reading. */
+  followUp?: { href: string; label: { en: string; ru: string } };
 };
 
 /**
@@ -176,11 +178,18 @@ export const openSource: OpenSourceRepo[] = [
       ru: "Ловит AI-агента, который правит тест под баг",
     },
     detail: {
-      en: "CI only ever runs the new tests against the new code. pr-witness runs the base branch's tests against the pull request's code, checks the PR description's claims (\"412 passed\") against the real run, and signs the result with GitHub attestations. Measured on a labelled corpus; P 0.91 / R 1.00.",
-      ru: "CI всегда гоняет новые тесты на новом коде. pr-witness запускает тесты базовой ветки на коде PR, сверяет заявления из описания («412 passed») с реальным прогоном и подписывает результат через GitHub attestations. Измерено на размеченном корпусе: P 0.91 / R 1.00.",
+      en: "CI only ever runs the new tests against the new code. pr-witness runs the base branch's tests against the pull request's code, shows each rewritten test with its old and new assertion, checks the PR description's claims (\"412 passed\") against the real run, and signs the result with GitHub attestations. Evaluated on commits from real Claude Code sessions with the tool frozen and the labels committed first: the cross-run agreed with the label in all 11 runs it completed; the overall verdict in 7 of 12, every miss traced to its cause and fixed in the next release.",
+      ru: "CI всегда гоняет новые тесты на новом коде. pr-witness запускает тесты базовой ветки на коде PR, показывает каждый переписанный тест со старым и новым утверждением, сверяет заявления из описания («412 passed») с реальным прогоном и подписывает результат через GitHub attestations. Проверен на коммитах из реальных сессий Claude Code — с замороженным кодом и метками, закоммиченными заранее: кросс-прогон совпал с меткой во всех 11 доведённых до конца прогонах; итоговый вердикт — в 7 из 12, причина каждого промаха найдена и исправлена в следующем релизе.",
     },
-    facts: ["Python", "115 tests · PyPI · GitHub Action", "Claude Code plugin"],
+    facts: ["Python", "170 tests · PyPI · GitHub Action", "Claude Code plugin"],
     article: "https://talhayme.github.io/blog/ci-only-runs-new-tests/",
+    followUp: {
+      href: "https://talhayme.github.io/blog/3355-agent-test-edits/",
+      label: {
+        en: "Then: 3,355 real agent test edits →",
+        ru: "Продолжение: 3 355 реальных правок тестов →",
+      },
+    },
   },
   {
     name: "ftgate",

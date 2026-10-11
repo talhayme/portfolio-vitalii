@@ -116,6 +116,16 @@ export default async function HomePage({
               {locale === "ru" ? "Статья в блоге →" : "Read the write-up →"}
             </a>
           )}
+          {repo.followUp && (
+            <a
+              href={repo.followUp.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[var(--fg-muted)] hover:text-[var(--accent)] no-underline px-1"
+            >
+              {locale === "ru" ? repo.followUp.label.ru : repo.followUp.label.en}
+            </a>
+          )}
           </div>
         ))}
       </div>
