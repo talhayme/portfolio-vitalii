@@ -22,12 +22,12 @@ export const projects: ProjectMeta[] = [
     year: "2024 — Now",
     company: "BookahTranslate / AthenaDev",
     role: {
-      en: "CTO",
-      ru: "CTO",
+      en: "Lead AI Engineer",
+      ru: "Lead AI Engineer",
     },
     oneLiner: {
-      en: "AI-powered document translation SaaS. PDF, EPUB, DOCX up to 300+ pages with layout preservation, powered by GPT-4 and Claude.",
-      ru: "AI-сервис перевода документов. PDF, EPUB, DOCX до 300+ страниц с сохранением форматирования на базе GPT-4 и Claude.",
+      en: "AI-powered document translation SaaS. PDF, EPUB, DOCX up to 1,100 pages with layout preservation, powered by GPT-4 and Claude.",
+      ru: "AI-сервис перевода документов. PDF, EPUB, DOCX до 1 100 страниц с сохранением форматирования на базе GPT-4 и Claude.",
     },
     stack: [
       "Python",
@@ -48,7 +48,7 @@ export const projects: ProjectMeta[] = [
     ],
     metrics: [
       { value: "3", label: { en: "Components shipped solo", ru: "Компонента — выпущены в одиночку" } },
-      { value: "300+", label: { en: "Pages per document supported", ru: "Страниц на документ" } },
+      { value: "1,100", label: { en: "Pages per document supported", ru: "Страниц на документ" } },
       { value: "80+", label: { en: "Tests (>70% coverage)", ru: "Тестов (>70% покрытия)" } },
       { value: "3", label: { en: "Auth providers (Google, VK, Telegram)", ru: "OAuth-провайдера" } },
     ],
@@ -166,10 +166,86 @@ export type OpenSourceRepo = {
 };
 
 /**
- * Standalone demos extracted from production patterns. Each runs offline —
- * no API key, no network — so a reader can clone and run in under a minute.
+ * Open-source tools and upstream work, newest first, then the standalone demos
+ * extracted from production patterns (those run offline, no API key needed).
  */
 export const openSource: OpenSourceRepo[] = [
+  {
+    name: "antagonist",
+    href: "https://github.com/talhayme/antagonist",
+    tagline: {
+      en: "An agent that tries to break your web app, and has to prove it",
+      ru: "Агент, который пытается сломать веб-приложение — и обязан это доказать",
+    },
+    detail: {
+      en: "An agent skill for Claude Code, Codex or Cursor that attacks a running web app with the inputs and sequences that break apps, and reports a defect only when a script with no model in it agrees: the same journey with an ordinary value and with the hostile one, twice each. On nine open-source apps it had never seen, it confirmed 40 defects, five of which lose data or take the server down. The NoteDiscovery maintainer fixed three within a day, FlyBudget fixed its report in #113; each fix was confirmed by replaying the same proof.",
+      ru: "Агентный скилл для Claude Code, Codex или Cursor: атакует запущенное веб-приложение входами и последовательностями, которые ломают приложения, и сообщает о дефекте, только когда с ним соглашается скрипт без модели — один и тот же сценарий с обычным значением и с враждебным, по два раза. На девяти незнакомых open-source приложениях подтвердил 40 дефектов, пять из них теряют данные или роняют сервер. Мейнтейнер NoteDiscovery исправил три в течение суток, FlyBudget — свой в #113; каждое исправление подтверждено повторным прогоном того же доказательства.",
+    },
+    facts: ["Agent skill · Node.js", "40 confirmed defects · 9 apps", "fixed upstream"],
+    article: "https://talhayme.github.io/blog/antagonist-forty-defects/",
+  },
+  {
+    name: "antagonist-bench",
+    href: "https://github.com/talhayme/antagonist-bench",
+    tagline: {
+      en: "Can a model find real defects without raising false alarms?",
+      ru: "Найдёт ли модель настоящие дефекты без ложных тревог?",
+    },
+    detail: {
+      en: "A benchmark on Inspect AI built from Antagonist's findings: nine apps pinned in Docker, 46 known defect causes, and a scorer that replays every submitted proof with no model in it. Three runs each: Claude Sonnet 5.5 reached a mean recall of 0.18 with no false alarms, Haiku 5.5 0.17, GPT-5.4 mini 0. The models also found nine real defects the original ground truth had missed.",
+      ru: "Бенчмарк на Inspect AI из находок Antagonist: девять приложений в Docker на зафиксированных коммитах, 46 известных причин дефектов и оценщик, который без модели заново прогоняет каждое присланное доказательство. По три прогона: у Claude Sonnet 5.5 средний recall 0.18 без ложных тревог, у Haiku 5.5 — 0.17, у GPT-5.4 mini — 0. Модели нашли и девять настоящих дефектов, которых не было в исходной разметке.",
+    },
+    facts: ["Inspect AI · Python", "3 models × 3 runs", "replayable proofs"],
+    article: "https://talhayme.github.io/blog/antagonist-bench-results/",
+  },
+  {
+    name: "mcp-era-bridge",
+    href: "https://github.com/talhayme/mcp-era-bridge",
+    tagline: {
+      en: "Legacy MCP clients talking to 2026-07-28 servers",
+      ru: "Старые MCP-клиенты и серверы на протоколе 2026-07-28",
+    },
+    detail: {
+      en: "A Rust bridge for the pairing the MCP specification's compatibility matrix marks \"Fails\": a legacy client and a server that speaks only the 2026-07-28 protocol. It translates the new input_required flow into the elicitation, sampling and roots requests a legacy client understands, and relays list-change notifications and authorization challenges. Verified end to end with Cursor 3.24 and the Python and TypeScript SDK 1.x clients.",
+      ru: "Мост на Rust для пары, которую матрица совместимости спецификации MCP помечает как «Fails»: старый клиент и сервер, говорящий только на протоколе 2026-07-28. Переводит новый поток input_required в запросы elicitation, sampling и roots, понятные старому клиенту, и передаёт уведомления об изменении списков и запросы авторизации. Проверен сквозными тестами с Cursor 3.24 и клиентами Python и TypeScript SDK 1.x.",
+    },
+    facts: ["Rust", "Cursor 3.24 · SDK 1.x clients", "MCP 2026-07-28"],
+  },
+  {
+    name: "mcp-sdk-diff",
+    href: "https://github.com/talhayme/mcp-sdk-diff",
+    tagline: {
+      en: "The same inputs to four official MCP SDKs",
+      ru: "Одни и те же входы — четырём официальным MCP SDK",
+    },
+    detail: {
+      en: "A differential test suite that feeds identical inputs to the official Python, TypeScript, Rust and Go MCP SDKs and reports where they disagree. It found a request silently parsed as a notification in two SDKs (triaged P1 upstream), seven valid SSE frames that stop a Rust client from connecting, and handlers whose failures reach the peer as JSON-RPC error code 0.",
+      ru: "Дифференциальный набор тестов: подаёт одинаковые входы официальным MCP SDK на Python, TypeScript, Rust и Go и показывает, где они расходятся. Нашёл запрос, который в двух SDK молча разбирается как уведомление (P1 у авторов), семь корректных SSE-кадров, после которых Rust-клиент не может подключиться, и обработчики, чьи ошибки уходят собеседнику с JSON-RPC-кодом 0.",
+    },
+    facts: ["Python harness · 4 SDKs", "45 inputs · 6 release lines", "issues triaged P1"],
+    article: "https://talhayme.github.io/blog/same-inputs-four-mcp-sdks/",
+    followUp: {
+      href: "https://talhayme.github.io/blog/mcp-error-codes-four-sdks/",
+      label: {
+        en: "Then: error codes across four SDKs →",
+        ru: "Продолжение: коды ошибок в четырёх SDK →",
+      },
+    },
+  },
+  {
+    name: "Official MCP SDK contributions",
+    href: "https://github.com/modelcontextprotocol/go-sdk/pulls?q=is%3Apr+author%3Atalhayme",
+    tagline: {
+      en: "Fixes merged upstream in the Go SDK, in review in the Rust SDK",
+      ru: "Исправления в официальных SDK: влиты в Go, на ревью в Rust",
+    },
+    detail: {
+      en: "Go SDK: two merged fixes for errors that reached the peer as JSON-RPC code 0 — a request before initialize now gets Invalid Request (#1393), and a handler error without a code gets Internal error (#1407), each behind an MCPGODEBUG compatibility flag. Rust SDK: cancelling a request the caller abandoned (#1344, in review) and reading a request id written in float form (#1345, triaged P1; fix in #1346).",
+      ru: "Go SDK: два влитых исправления для ошибок, которые уходили собеседнику с JSON-RPC-кодом 0, — запрос до initialize теперь получает Invalid Request (#1393), а ошибка обработчика без кода — Internal error (#1407), оба за флагом совместимости MCPGODEBUG. Rust SDK: отмена запроса, который вызывающий бросил (#1344, на ревью), и чтение id запроса, записанного как дробное число (#1345, P1; исправление в #1346).",
+    },
+    facts: ["Go: #1393, #1407 merged", "Rust: #1344 in review", "Rust: #1345 P1"],
+    article: "https://talhayme.github.io/blog/one-error-code-six-files/",
+  },
   {
     name: "pr-witness",
     href: "https://github.com/talhayme/pr-witness",
@@ -366,20 +442,20 @@ export const ui = {
   about: {
     paragraphs: {
       en: [
-        "I build LLM products that reach production. Since 2024 that has mostly meant BookahTranslate — an AI document-translation SaaS I built and operate solo, with paying subscribers. The pipeline runs on GPT-4 and Claude and handles PDF, EPUB and DOCX up to 300+ pages while preserving layout: parsing, chunking, context assembly, translation, reassembly.",
+        "I build LLM products that reach production. Since 2024 that has mostly meant BookahTranslate — an AI document-translation SaaS I built and operate, with 800 subscribers on paid plans. The pipeline runs on GPT-4 and Claude and handles PDF, EPUB and DOCX up to 1,100 pages while preserving layout: parsing, chunking, context assembly, translation, reassembly.",
         "The interesting part of that work is never the prompt. It is automatic fallback between providers and models when one times out or rate-limits; response caching and model routing to keep inference costs down; and an evaluation set that gates every prompt or model change — 80+ tests, accuracy, relevance, hallucination rate, latency and cost, with automated regression.",
         "Alongside it I do AI-implementation consulting for fintech, legal-tech and B2B SaaS teams: RAG over corporate knowledge bases — sentence-aligned chunking at ~3,500 characters, hybrid dense and lexical retrieval, calibrated confidence floors that keep unsupported answers under 10% on the eval set — agent architectures over custom MCP servers with strict tool-call schemas and multi-step tool loops, and rolling out Claude Code, Codex and Cursor across client engineering teams with quality gates before release.",
         "A second product, Digital Psychologist, is where I compared fine-tuning against retrieval head to head: LangChain and FAISS for the retrieval layer with local sentence-transformer embeddings, and three interchangeable modes — retrieval-only, fine-tuned model, and hybrid — switchable by configuration, so the trade-off could be measured on one product rather than argued.",
-        "Two open-source tools came out of this work. pr-witness runs the base branch's tests against a pull request's code and checks the PR's own claims against the real run — the combination CI never runs, and the way an AI agent's \"all tests pass\" gets verified rather than trusted. ftgate checks whether a fine-tuned small model is served the bytes it was trained on; its first week measured what a known Ollama bug costs — the tool schema reaching the model as a Go struct dump — and found Qwen's official GGUFs embedding a pre-fix chat template, both reported upstream with measurements. Alongside them, three standalone demos — an eval harness with a CI release gate, an MCP server, and a RAG pipeline that refuses rather than guesses — all offline, with tests and green CI.",
+        "The open-source work asks one question of AI systems: does it do what it claims? Antagonist attacks a running web app and reports only the defects a model-free verifier reproduces — 40 in nine open-source apps, with fixes shipped by their maintainers — and Antagonist Bench turns those findings into a benchmark that measures models on the same task. pr-witness checks an AI agent's \"all tests pass\" against a real run; ftgate checks that a fine-tuned small model is served the bytes it was trained on. On the protocol side I wrote mcp-era-bridge, which lets legacy MCP clients reach servers on the 2026-07-28 protocol, and mcp-sdk-diff, a differential suite across the four official MCP SDKs; its findings became two merged fixes in the Go SDK and fixes in review in the Rust SDK.",
         "Underneath all of this is 13 years of engineering. I started in QA — manual, then leading a team and writing Python + Selenium automation — which is why I think about edge cases first and write tests as I go. Then backend at Smart Trade (Germany), 3.5 years at Bequant (an institutional crypto exchange: trading terminal at 10K events/min, a GraphQL layer that cut backend load 45%), and Coperniq, a US solar SaaS, where I led 4 engineers, drove the monolith → microservices migration and cut API p50 from 1.2s to 180ms.",
         "That foundation is the reason the AI work holds up. Anyone can call an LLM API; the difficulty is making it survive contact with real users, real failure modes and a real bill.",
       ],
       ru: [
-        "Я строю LLM-продукты, которые доходят до продакшена. С 2024 года это в основном BookahTranslate — AI-сервис перевода документов, который я сделал и веду в одиночку, с платящими подписчиками. Пайплайн работает на GPT-4 и Claude, обрабатывает PDF, EPUB и DOCX до 300+ страниц с сохранением вёрстки: парсинг, чанкинг, сборка контекста, перевод, пересборка документа.",
+        "Я строю LLM-продукты, которые доходят до продакшена. С 2024 года это в основном BookahTranslate — AI-сервис перевода документов, который я сделал и веду, — 800 подписчиков на платных тарифах. Пайплайн работает на GPT-4 и Claude, обрабатывает PDF, EPUB и DOCX до 1 100 страниц с сохранением вёрстки: парсинг, чанкинг, сборка контекста, перевод, пересборка документа.",
         "Самое интересное в этой работе — никогда не промпт. Это автоматический фолбэк между провайдерами и моделями, когда один таймаутит или упирается в рейт-лимит; кэширование ответов и роутинг между моделями, чтобы держать стоимость инференса под контролем; и evaluation-набор, через который проходит каждое изменение промпта или модели — 80+ тестов на точность, релевантность, уровень галлюцинаций, задержку и стоимость, с автоматической регрессией.",
         "Параллельно занимаюсь AI-внедрением для команд в финтехе, legal-tech и B2B SaaS: RAG над корпоративными базами знаний — чанкинг по границам предложений (~3 500 символов), гибридный поиск (векторный + лексический), откалиброванные пороги уверенности, которые держат долю неподтверждённых ответов ниже 10% на eval-наборе, — агентные архитектуры поверх кастомных MCP-серверов со строгими схемами вызова инструментов и многошаговыми циклами, и внедрение Claude Code, Codex и Cursor в командах клиентов с гейтами качества перед релизом.",
         "Второй продукт, Digital Psychologist, — место, где я сравнил fine-tuning и retrieval напрямую: LangChain и FAISS для слоя поиска с локальными sentence-transformer эмбеддингами и три взаимозаменяемых режима — только поиск, дообученная модель и гибрид — переключаемые конфигурацией, чтобы компромисс можно было измерить на одном продукте, а не обсуждать теоретически.",
-        "Из этой работы выросли два open-source инструмента. pr-witness запускает тесты базовой ветки на коде pull request'а и сверяет заявления из описания PR с реальным прогоном — комбинация, которую CI не делает никогда, и способ проверять «все тесты проходят» от AI-агента, а не верить на слово. ftgate проверяет, получает ли дообученная малая модель те байты, на которых её учили; за первую неделю он измерил цену известной ошибки Ollama — схема инструмента доходит до модели в виде дампа Go-структуры — и нашёл, что в официальных GGUF Qwen зашит шаблон до фикса — оба случая отправлены авторам с замерами. Рядом — три отдельных демо: eval-харнесс с релизным гейтом в CI, MCP-сервер и RAG-пайплайн, который отказывается отвечать вместо того, чтобы выдумывать. Всё офлайн, с тестами и зелёным CI.",
+        "Open-source работа задаёт AI-системам один вопрос: делает ли она то, что заявляет? Antagonist атакует запущенное веб-приложение и сообщает только о дефектах, которые воспроизводит проверка без модели, — 40 в девяти open-source приложениях, с исправлениями от их мейнтейнеров, — а Antagonist Bench превращает эти находки в бенчмарк, который меряет модели на той же задаче. pr-witness сверяет «все тесты проходят» от AI-агента с реальным прогоном; ftgate проверяет, получает ли дообученная малая модель те байты, на которых её учили. На уровне протокола я написал mcp-era-bridge, который позволяет старым MCP-клиентам работать с серверами на протоколе 2026-07-28, и mcp-sdk-diff — дифференциальный набор тестов для четырёх официальных MCP SDK; его находки превратились в два влитых исправления в Go SDK и исправления на ревью в Rust SDK.",
         "В основе всего этого — 13 лет инженерного опыта. Начинал в QA: ручное тестирование, потом руководство командой и автотесты на Python + Selenium — поэтому я думаю про edge-кейсы заранее и пишу тесты параллельно с кодом. Затем backend в Smart Trade (Германия), 3.5 года в Bequant (институциональная криптобиржа: торговый терминал на 10K событий/мин, GraphQL-слой, снизивший нагрузку на backend на 45%) и Coperniq, американский solar-SaaS, где я вёл команду из 4 инженеров, провёл миграцию монолита в микросервисы и снизил p50 API с 1.2с до 180мс.",
         "Именно этот фундамент — причина, по которой AI-часть выдерживает нагрузку. Вызвать LLM API может кто угодно; сложность в том, чтобы это пережило встречу с реальными пользователями, реальными сбоями и реальным счётом за инференс.",
       ],

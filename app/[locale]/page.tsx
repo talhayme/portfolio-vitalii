@@ -77,8 +77,8 @@ export default async function HomePage({
       </h2>
       <p className="text-[var(--fg-muted)]">
         {locale === "ru"
-          ? "Два инструмента, которые проверяют то, на что обычно полагаются на слово, и три демо, снятых с production-паттернов. Всё с тестами и зелёным CI; демо запускаются офлайн."
-          : "Two tools that verify what is usually taken on trust, and three standalone demos extracted from production patterns. All with tests and green CI; the demos run offline."}
+          ? "Инструменты, которые проверяют то, на что в AI-системах обычно полагаются на слово, работа над официальными MCP SDK и три демо, снятых с production-паттернов. Всё с тестами и зелёным CI; демо запускаются офлайн."
+          : "Tools that verify what AI systems usually take on trust, work on the official MCP SDKs, and three standalone demos extracted from production patterns. All with tests and green CI; the demos run offline."}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose mb-12">
         {openSource.map((repo) => (
